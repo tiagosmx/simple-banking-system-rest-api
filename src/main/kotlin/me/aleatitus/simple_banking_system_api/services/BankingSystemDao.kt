@@ -1,4 +1,4 @@
-package me.aleatitus.simple_banking_system_api
+package me.aleatitus.simple_banking_system_api.services
 
 import me.aleatitus.simple_banking_system_api.exceptions.NonexistentAccountException
 import me.aleatitus.simple_banking_system_api.models.*
