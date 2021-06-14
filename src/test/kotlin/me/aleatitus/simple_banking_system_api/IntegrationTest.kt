@@ -26,6 +26,7 @@ class IntegrationTest {
     fun `Reset state before starting tests`(){
         val r = Unirest.post("$url/reset").asString()
         assertEquals(r.status,200)
+        assertEquals(r.body, "OK")
     }
 
     /** Get balance for non-existing account
@@ -117,6 +118,24 @@ class IntegrationTest {
     @Test
     @Order(9)
     fun `Transfer from existing account`(){
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"transfer", "origin":"100", "amount":15, "destination":"300"}""")
+            .asString()
+        assertEquals(r.status, 201)
+        assertEquals(r.body, """{"origin":{"id":"100","balance":0},"destination":{"id":"300","balance":15}}""")
+    }
 
+    /** Transfer from non-existing account
+     * POST /event {"type":"transfer", "origin":"200", "amount":15, "destination":"300"}
+     * 404 0
+     */
+    @Test
+    @Order(10)
+    fun `Transfer from non-existing account`(){
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"transfer", "origin":"200", "amount":15, "destination":"300"}""")
+            .asString()
+        assertEquals(r.status, 404)
+        assertEquals(r.body, "0")
     }
 }

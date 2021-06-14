@@ -2,7 +2,6 @@ package me.aleatitus.simple_banking_system_api
 
 import io.javalin.http.Context
 import io.javalin.http.Handler
-import jdk.internal.org.objectweb.asm.Handle
 import me.aleatitus.simple_banking_system_api.exceptions.NonexistentAccountException
 import me.aleatitus.simple_banking_system_api.models.Event
 import me.aleatitus.simple_banking_system_api.utils.HTTPContentTypes

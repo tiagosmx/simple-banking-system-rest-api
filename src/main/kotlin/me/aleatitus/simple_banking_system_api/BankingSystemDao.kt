@@ -27,6 +27,12 @@ class BankingSystemDao (private val accounts: MutableMap<String, Account> = muta
     }
 
     fun transfer(transfer: Event.Transfer): TransferResponse {
-        throw NotImplementedError()
+        val accountOrigin = this.accounts[transfer.origin] ?: throw NonexistentAccountException("")
+        val accountDestination = this.accounts.getOrPut(transfer.destination) { Account(transfer.destination, 0) }
+        val updatedAccountOrigin = Account(accountOrigin.id, accountOrigin.balance - transfer.amount)
+        val updatedAccountDestination = Account(accountDestination.id, accountDestination.balance + transfer.amount)
+        this.accounts[updatedAccountDestination.id] = updatedAccountDestination
+        this.accounts[updatedAccountOrigin.id] = updatedAccountOrigin
+        return TransferResponse(updatedAccountOrigin, updatedAccountDestination)
     }
 }
