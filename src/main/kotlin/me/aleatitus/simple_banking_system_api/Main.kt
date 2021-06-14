@@ -18,5 +18,6 @@ fun startApi(){
 
     app.post("reset",bankingSystemController.reset)
     app.get("balance", bankingSystemController.getAccountBalance)
+    app.post("event", bankingSystemController.event)
 
 }

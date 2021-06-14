@@ -47,7 +47,11 @@ class IntegrationTest {
     @Test
     @Order(4)
     fun `Create account with initial balance`(){
-
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"deposit", "destination":"100", "amount":10}""")
+            .asString()
+        assertEquals(r.status, 201)
+        assertEquals(r.body, """{"destination":{"id":"100","balance":10}}""")
     }
 
     /** Deposit into existing account
@@ -57,7 +61,11 @@ class IntegrationTest {
     @Test
     @Order(5)
     fun `Deposit into existing account`(){
-
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"deposit", "destination":"100", "amount":10}""")
+            .asString()
+        assertEquals(r.status, 201)
+        assertEquals(r.body, """{"destination":{"id":"100","balance":20}}""")
     }
 
     /** Get balance for existing account
@@ -67,7 +75,11 @@ class IntegrationTest {
     @Test
     @Order(6)
     fun `Get balance for existing account`(){
-
+        val r = Unirest.get("$url/balance")
+            .queryString("account_id", "100")
+            .asString()
+        assertEquals(r.status, 200)
+        assertEquals(r.body,"20")
     }
 
     /** Withdraw from non-existing account
@@ -77,7 +89,11 @@ class IntegrationTest {
     @Test
     @Order(7)
     fun `Withdraw from non-existing account`(){
-
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"withdraw", "origin":"200", "amount":10}""")
+            .asString()
+        assertEquals(r.status, 404)
+        assertEquals(r.body, "0")
     }
 
     /** Withdraw from existing account
@@ -87,7 +103,11 @@ class IntegrationTest {
     @Test
     @Order(8)
     fun `Withdraw from existing account`(){
-
+        val r = Unirest.post("$url/event")
+            .body("""{"type":"withdraw", "origin":"100", "amount":5}""")
+            .asString()
+        assertEquals(r.status, 201)
+        assertEquals(r.body, """{"origin":{"id":"100","balance":15}}""")
     }
 
     /** Transfer from existing account
