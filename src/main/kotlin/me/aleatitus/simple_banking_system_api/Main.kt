@@ -17,6 +17,6 @@ fun startApi(){
     }.start(7000)
 
     app.post("reset",bankingSystemController.reset)
-    app.post("balance", bankingSystemController.getAccountBalance)
+    app.get("balance", bankingSystemController.getAccountBalance)
 
 }

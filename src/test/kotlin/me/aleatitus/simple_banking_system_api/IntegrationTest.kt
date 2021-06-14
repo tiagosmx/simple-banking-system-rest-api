@@ -2,6 +2,7 @@ package me.aleatitus.simple_banking_system_api
 
 import kong.unirest.Unirest
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class IntegrationTest {
@@ -24,7 +25,7 @@ class IntegrationTest {
     @Order(2)
     fun `Reset state before starting tests`(){
         val r = Unirest.post("$url/reset").asString()
-        Assertions.assertEquals(r.status,200)
+        assertEquals(r.status,200)
     }
 
     /** Get balance for non-existing account
@@ -34,7 +35,9 @@ class IntegrationTest {
     @Test
     @Order(3)
     fun `Get balance for non-existing account`(){
-
+        val r = Unirest.get("$url/balance").queryString("account_id","1234").asString()
+        assertEquals(r.status,404)
+        assertEquals(r.body, "0")
     }
 
     /** Create account with initial balance
