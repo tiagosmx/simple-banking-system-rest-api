@@ -10,4 +10,4 @@ In this API we use the following libraries:
 This software uses Gradle for managing dependencies (our used libraries).
 
 
-You can easily run this code through IntelliJ.
+You can easily run this code through IntelliJ Community (free edition) IDE.
