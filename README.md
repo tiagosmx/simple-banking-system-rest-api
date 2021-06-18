@@ -1,4 +1,4 @@
-# This is a simple software for showing how you can easily create an API for Kotlin + Integration tests + Unit tests.
+# This is a simple software for showing how you can easily create an API for Kotlin + Integration tests + Unit tests
 
 In this API we use the following libraries:
 
